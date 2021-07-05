@@ -1,4 +1,4 @@
-package repository
+package service
 
 import "store/pair"
 
