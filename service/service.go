@@ -9,8 +9,6 @@ type Service struct {
 	pairCreator pair.AbstractFactory
 }
 
-// TODO run test suite for a InMemoryRepo-backed Service.
-
 // Return a new instance of Service. Must take as argument a Repository and
 // a pair.AbstractFactory for creating instances of pair.Pair.
 func NewService(repo Repository, pairCreator pair.AbstractFactory) *Service {
