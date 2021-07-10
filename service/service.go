@@ -16,25 +16,25 @@ func NewService(repo Repository, pairCreator pair.AbstractFactory) *Service {
 }
 
 // Adds a Pair of elements to the store. The types of these values is arbitrary.
-func (srv *Service) AddPair(first, second interface{}) {
+func (srv *Service) AddPair(first, second string) {
 	p := srv.pairCreator.CreatePair(first, second)
 	srv.repo.Add(p)
 }
 
 // Removes a pair.Pair from the store. Returns true if the operation was done
 // successfully.
-func (srv *Service) RemovePair(key interface{}) bool {
+func (srv *Service) RemovePair(key string) bool {
 	return srv.repo.Remove(key)
 }
 
 // Returns true if an element with the given key is found.
-func (srv *Service) Find(key interface{}) bool {
+func (srv *Service) Find(key string) bool {
 	return srv.repo.Find(key)
 }
 
 // Searches for an element with the given key and returns the element, and a bool
 // that is true if the element was found. If the bool is false, then the first
 // element will be zero-initialized.
-func (srv *Service) Search(key interface{}) (pair.Pair, bool) {
+func (srv *Service) Search(key string) (pair.Pair, bool) {
 	return srv.repo.Search(key)
 }

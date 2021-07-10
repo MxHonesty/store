@@ -1,13 +1,19 @@
 package service
 
 import (
+	"os"
 	"store/pair"
 	"store/repository"
 	"testing"
 )
 
-func TestService_AddPair(t *testing.T) {
-	repo := repository.NewInMemoryRepository()
+// Cleans up the Database file.
+func cleanUp() {
+	_ = os.Remove("test.db")
+}
+
+func TestService_bolt_AddPair(t *testing.T) {
+	repo, _ := repository.NewBoltRepository("test.db")
 	srv := NewService(repo, pair.StringPairFactory{})
 	srv.AddPair("a", "a")
 
@@ -15,10 +21,13 @@ func TestService_AddPair(t *testing.T) {
 	if !rez {
 		t.Errorf("Expected to find value")
 	}
+
+	cleanUp()
 }
 
-func TestService_Find(t *testing.T) {
-	repo := repository.NewInMemoryRepository()
+/*
+func TestService_bolt_Find(t *testing.T) {
+	repo, _ := repository.NewBoltRepository("test.db")
 	srv := NewService(repo, pair.StringPairFactory{})
 	srv.AddPair("a", "a")
 	srv.AddPair("b", "b")
@@ -30,10 +39,15 @@ func TestService_Find(t *testing.T) {
 	if srv.Find("c") {
 		t.Error("Expected to not find key c")
 	}
-}
 
-func TestService_RemovePair(t *testing.T) {
-	repo := repository.NewInMemoryRepository()
+	cleanUp()
+}
+*/
+
+
+/*
+func TestService_bolt_RemovePair(t *testing.T) {
+	repo, _ := repository.NewBoltRepository("test.db")
 	srv := NewService(repo, pair.StringPairFactory{})
 	srv.AddPair("a", "a")
 	srv.AddPair("b", "b")
@@ -47,10 +61,14 @@ func TestService_RemovePair(t *testing.T) {
 	if removed {
 		t.Errorf("Removed non existent item")
 	}
-}
 
-func TestService_Search(t *testing.T) {
-	repo := repository.NewInMemoryRepository()
+	cleanUp()
+}
+*/
+
+/*
+func TestService_bolt_Search(t *testing.T) {
+	repo, _ := repository.NewBoltRepository("test.db")
 	srv := NewService(repo, pair.StringPairFactory{})
 	srv.AddPair("a", "a")
 	srv.AddPair("b", "b")
@@ -63,4 +81,7 @@ func TestService_Search(t *testing.T) {
 	if el.Second() != "a" {
 		t.Errorf("Expected Second to be a, got %s", el.Second())
 	}
+
+	cleanUp()
 }
+*/

@@ -4,8 +4,6 @@ import (
 	"store/pair"
 )
 
-// TODO Implement
-
 // In-Memory implementation of the Repository. The intent of this module is
 // mainly for simplifying testing by storing all the key/value pairs in a slice.
 type InMemoryRepository struct {
@@ -24,7 +22,7 @@ func (i *InMemoryRepository) Add(pair pair.Pair) {
 
 // Removes a pair.Pair with a given key from the service.Repository. Returns true
 // if a pair.Pair was removed, returns false if none was found.
-func (i *InMemoryRepository) Remove(key interface{}) bool {
+func (i *InMemoryRepository) Remove(key string) bool {
 	rez := make([]pair.Pair, 0)
 	index := -1
 
@@ -46,7 +44,7 @@ func (i *InMemoryRepository) Remove(key interface{}) bool {
 }
 
 // Returns true if a pair.Pair with the given key exists.
-func (i *InMemoryRepository) Find(key interface{}) bool {
+func (i *InMemoryRepository) Find(key string) bool {
 	for _, el := range i.elems {
 		if el.First() == key {
 			return true
@@ -57,7 +55,7 @@ func (i *InMemoryRepository) Find(key interface{}) bool {
 
 // Searches for a pair.Pair with the given key. IF such a pair is found. return
 // it. The bool return value determines if such a pair could be found.
-func (i *InMemoryRepository) Search(key interface{}) (pair.Pair, bool) {
+func (i *InMemoryRepository) Search(key string) (pair.Pair, bool) {
 	for _, el := range i.elems {
 		if el.First() == key {
 			return el, true
