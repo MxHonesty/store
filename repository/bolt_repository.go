@@ -21,6 +21,11 @@ func NewBoltRepository(dbName string) (*BoltRepository, error) {
 	return store, err
 }
 
+// Closes the db.
+func (b	*BoltRepository) Close() {
+	_ = b.database.Close()
+}
+
 // Creates the main Bucket for the Store.
 func (b *BoltRepository) createBucket() {
 	err := b.database.Update(func(tx *bolt.Tx) error {
@@ -52,6 +57,11 @@ func (b *BoltRepository) Add(pair pair.Pair) {
 
 func (b *BoltRepository) Remove(key string) bool {
 	removed := false
+
+	exists := b.Find(key)
+	if !exists {
+		return false  // Non existent can't be removed.
+	}
 
 	err := b.database.Update(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte("Main"))
